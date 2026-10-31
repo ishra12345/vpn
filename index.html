@@ -2,397 +2,109 @@
 
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h2>Our Products</h2>
 
-<title>Automatic Currency Website</title>
+<p>Product 1: <span data-inr="1500">₹1,500</span></p>
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 30px;
-    background: #f5f5f5;
-}
+<p>Product 2: <span data-inr="2500">₹2,500</span></p>
 
-.container {
-    max-width: 900px;
-    margin: auto;
-}
-
-.currency-box {
-    text-align: right;
-    margin-bottom: 25px;
-}
-
-select {
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 15px;
-}
-
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-}
-
-.product {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    text-align: center;
-}
-
-.product h3 {
-    margin-bottom: 15px;
-}
-
-.price {
-    font-size: 24px;
-    color: #159447;
-    font-weight: bold;
-}
-
-#currency-status {
-    font-size: 13px;
-    color: #666;
-    margin-top: 8px;
-}
-
-.attribution {
-    font-size: 12px;
-    margin-top: 30px;
-    text-align: center;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-    <h1>Our Products</h1>
-
-    <!-- Currency Selector -->
-    <div class="currency-box">
-
-        <label for="currencySelect">
-            Select Currency:
-        </label>
-
-        <select id="currencySelect">
-            <option value="AUTO">Automatic Currency</option>
-            <option value="INR">INR - Indian Rupee</option>
-            <option value="USD">USD - US Dollar</option>
-            <option value="GBP">GBP - British Pound</option>
-            <option value="EUR">EUR - Euro</option>
-            <option value="AED">AED - UAE Dirham</option>
-            <option value="CAD">CAD - Canadian Dollar</option>
-            <option value="AUD">AUD - Australian Dollar</option>
-            <option value="SAR">SAR - Saudi Riyal</option>
-            <option value="SGD">SGD - Singapore Dollar</option>
-            <option value="JPY">JPY - Japanese Yen</option>
-        </select>
-
-        <p id="currency-status">Detecting your location...</p>
-
-    </div>
+<p>Discount Price: <span data-inr="999">₹999</span></p>
 
 
 
 
-<script>
-
-const GEO_API = "https://ipapi.co/json/";
-
-const RATE_API =
-"https://open.er-api.com/v6/latest/INR";
-
-let currentCurrency = "INR";
-let exchangeRates = { INR: 1 };
-let countryCode = "IN";
-
-const currencySelect =
-document.getElementById("currencySelect");
-
-const statusText =
-document.getElementById("currency-status");
 
 
-// Country to locale mapping
-const locales = {
-    IN: "en-IN",
-    US: "en-US",
-    GB: "en-GB",
-    AE: "en-AE",
-    FR: "fr-FR",
-    DE: "de-DE",
-    CA: "en-CA",
-    AU: "en-AU",
-    SA: "ar-SA",
-    SG: "en-SG",
-    JP: "ja-JP"
-};
 
 
-// Get cached exchange rates
-function getCachedRates() {
+(async function () {
+
+    let currency = "INR";
+    let country = "IN";
+    let rates = { INR: 1 };
+
+    const localeMap = {
+        IN: "en-IN",
+        US: "en-US",
+        GB: "en-GB",
+        AE: "en-AE",
+        CA: "en-CA",
+        AU: "en-AU",
+        SA: "ar-SA",
+        SG: "en-SG",
+        DE: "de-DE",
+        FR: "fr-FR"
+    };
 
     try {
+        const geo = await fetch("https://ipapi.co/json/");
+        const location = await geo.json();
 
-        const saved =
-        localStorage.getItem("currency_rates");
-
-        if (!saved) return null;
-
-        const data = JSON.parse(saved);
-
-        if (Date.now() - data.time < 86400000) {
-            return data.rates;
+        if (location.currency && !location.error) {
+            currency = location.currency;
+            country = location.country_code || "IN";
         }
 
-    } catch (error) {
-        console.log("Cache unavailable");
-    }
-
-    return null;
-}
-
-
-// Fetch exchange rates
-async function getExchangeRates() {
-
-    const cached = getCachedRates();
-
-    if (cached) {
-        exchangeRates = cached;
-        return;
-    }
-
-    const response = await fetch(RATE_API);
-
-    if (!response.ok) {
-        throw new Error("Exchange rate API failed");
-    }
-
-    const data = await response.json();
-
-    if (data.result !== "success" || !data.rates) {
-        throw new Error("Invalid exchange rate response");
-    }
-
-    exchangeRates = data.rates;
-
-    try {
-
-        localStorage.setItem(
-            "currency_rates",
-            JSON.stringify({
-                time: Date.now(),
-                rates: exchangeRates
-            })
+        const response = await fetch(
+            "https://open.er-api.com/v6/latest/INR"
         );
-
-    } catch (error) {
-        console.log("Unable to save rates");
-    }
-
-}
-
-
-// Detect visitor's country
-async function detectCountry() {
-
-    try {
-
-        const response = await fetch(GEO_API);
-
-        if (!response.ok) {
-            throw new Error("Location detection failed");
-        }
 
         const data = await response.json();
 
-        if (data.error || !data.currency) {
-            throw new Error("Country information unavailable");
+        if (data.result === "success") {
+            rates = data.rates;
         }
 
-        countryCode = data.country_code || "IN";
-
-        currentCurrency = data.currency;
-
-        statusText.innerText =
-            "Detected Country: " + data.country_name;
-
     } catch (error) {
-
-        currentCurrency = "INR";
-        countryCode = "IN";
-
-        statusText.innerText =
-            "Location unavailable. Showing INR.";
-
+        console.log("Currency API unavailable:", error);
     }
 
-}
+    function convertPrices() {
 
+        const rate = rates[currency] || 1;
 
-// Format currency
-function formatCurrency(amount, currency) {
+        document.querySelectorAll("[data-inr]").forEach(el => {
 
-    const locale =
-        locales[countryCode] || navigator.language || "en-US";
+            if (el.dataset.converted === "true") return;
 
-    return new Intl.NumberFormat(locale, {
+            const amount = Number(el.dataset.inr);
 
-        style: "currency",
-        currency: currency
+            if (!Number.isFinite(amount)) return;
 
-    }).format(amount);
+            el.textContent = new Intl.NumberFormat(
+                localeMap[country] || "en-US",
+                {
+                    style: "currency",
+                    currency: currency
+                }
+            ).format(amount * rate);
 
-}
+            el.dataset.converted = "true";
 
-
-// Convert and display product prices
-function updatePrices() {
-
-    const prices =
-    document.querySelectorAll("[data-price-inr]");
-
-    const rate = exchangeRates[currentCurrency];
-
-    if (!rate) {
-
-        statusText.innerText =
-            "Currency rate unavailable. Showing INR.";
-
-        currentCurrency = "INR";
-
-        currencySelect.value = "INR";
-
+        });
     }
 
-    prices.forEach(function(product) {
+    convertPrices();
 
-        const originalPrice =
-        Number(product.dataset.priceInr);
-
-        const convertedPrice =
-        originalPrice *
-        (exchangeRates[currentCurrency] || 1);
-
-        product.innerText =
-            formatCurrency(convertedPrice, currentCurrency);
-
+    // Automatically convert dynamically loaded products
+    const observer = new MutationObserver(() => {
+        convertPrices();
     });
 
-    currencySelect.value =
-        localStorage.getItem("manual_currency") || "AUTO";
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 
-    if (currencySelect.value !== "AUTO") {
-        currencySelect.value = currentCurrency;
-    }
-
-}
+})();
 
 
-// Manual currency selection
-currencySelect.addEventListener("change", function() {
-
-    const selected = this.value;
-
-    if (selected === "AUTO") {
-
-        localStorage.removeItem("manual_currency");
-
-        startCurrencySystem();
-
-        return;
-
-    }
-
-    if (!exchangeRates[selected]) {
-
-        statusText.innerText =
-            "Selected currency is unavailable.";
-
-        return;
-
-    }
-
-    currentCurrency = selected;
-
-    localStorage.setItem("manual_currency", selected);
-
-    updatePrices();
-
-    statusText.innerText =
-        "Currency selected: " + selected;
-
-});
 
 
-// Main function
-async function startCurrencySystem() {
-
-    try {
-
-        statusText.innerText =
-            "Detecting country and exchange rates...";
-
-        await detectCountry();
-
-        await getExchangeRates();
-
-        const manualCurrency =
-            localStorage.getItem("manual_currency");
-
-        if (manualCurrency &&
-            exchangeRates[manualCurrency]) {
-
-            currentCurrency = manualCurrency;
-
-        }
-
-        if (!exchangeRates[currentCurrency]) {
-
-            currentCurrency = "INR";
-
-        }
-
-        updatePrices();
-
-    } catch (error) {
-
-        console.error(error);
-
-        currentCurrency = "INR";
-
-        updatePrices();
-
-        statusText.innerText =
-            "Exchange rate unavailable. Showing INR.";
-
-    }
-
-}
 
 
-// Start
-startCurrencySystem();
 
-</script>
-
-</body>
-</html>
-
-
+<script src="/js/currency.js"></script>
 
 
 
