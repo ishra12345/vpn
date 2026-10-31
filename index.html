@@ -1,0 +1,777 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automatic Country Currency</title>
+</head>
+<body>
+
+<h2>Product Price</h2>
+
+<h3 id="price">Loading currency...</h3>
+
+<script>
+async function detectCurrency() {
+    try {
+        const response = await fetch("https://ipapi.co/json/");
+        const data = await response.json();
+
+        const currency = data.currency || "INR";
+
+        const price = 100;
+
+        const formatter = new Intl.NumberFormat(
+            data.country_code === "IN" ? "en-IN" : "en-US",
+            {
+                style: "currency",
+                currency: currency
+            }
+        );
+
+        document.getElementById("price").innerText =
+            formatter.format(price);
+
+    } catch (error) {
+        document.getElementById("price").innerText = "₹100";
+    }
+}
+
+detectCurrency();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureGrid Digital | Premium Digital Agency</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae0fd',
+                            500: '#0284c7',
+                            600: '#0265d2',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#0f172a',
+                            dark: '#0a1128'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(10, 17, 40, 0.92) 0%, rgba(29, 78, 216, 0.85) 100%), 
+                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .toast {
+            transition: all 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white">
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-32 opacity-0 toast bg-emerald-600 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-xl"></i>
+        <span id="toast-message">Your message has been sent successfully!</span>
+    </div>
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Logo -->
+                <a href="#home" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 bg-brand-700 rounded-xl flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:bg-brand-800 transition-colors">
+                        <i class="fa-solid fa-shield-halved text-xl"></i>
+                    </div>
+                    <span class="text-xl font-extrabold tracking-tight text-slate-900">SecureGrid<span class="text-brand-700">.Digital</span></span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden lg:flex items-center space-x-8 font-medium text-slate-600 text-sm">
+                    <a href="#home" class="hover:text-brand-700 transition-colors py-1 border-b-2 border-transparent hover:border-brand-700">Home</a>
+                    <a href="#about" class="hover:text-brand-700 transition-colors py-1 border-b-2 border-transparent hover:border-brand-700">About Us</a>
+                    <a href="#services" class="hover:text-brand-700 transition-colors py-1 border-b-2 border-transparent hover:border-brand-700">Services</a>
+                    <a href="javascript:void(0)" onclick="openModal('privacyModal')" class="hover:text-brand-700 transition-colors py-1">Privacy & Policy</a>
+                    <a href="javascript:void(0)" onclick="openModal('disclaimerModal')" class="hover:text-brand-700 transition-colors py-1">Disclaimer</a>
+                    <a href="javascript:void(0)" onclick="openModal('termsModal')" class="hover:text-brand-700 transition-colors py-1">Terms & Conditions</a>
+                </nav>
+
+                <!-- Desktop CTA Button -->
+                <div class="hidden lg:flex items-center">
+                    <a href="#contact" class="bg-brand-700 hover:bg-brand-800 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-md shadow-brand-700/20 hover:shadow-lg">Get in Touch</a>
+                </div>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="menuBtn" class="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3">
+            <a href="#home" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-700">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-700">About Us</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-700">Services</a>
+            <a href="javascript:void(0)" onclick="openModal('privacyModal'); toggleMobileMenu();" class="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-700">Privacy & Policy</a>
+            <a href="javascript:void(0)" onclick="openModal('disclaimerModal'); toggleMobileMenu();" class="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-700">Disclaimer</a>
+            <a href="javascript:void(0)" onclick="openModal('termsModal'); toggleMobileMenu();" class="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-700">Terms & Conditions</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block w-full text-center bg-brand-700 text-white py-2.5 rounded-lg font-semibold shadow">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-[85vh] flex items-center relative overflow-hidden text-white py-20 lg:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-200 border border-blue-400/30 backdrop-blur-md">
+                        <i class="fa-solid fa-bolt text-yellow-400 mr-2"></i> Elevating Digital Presence & Security
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                        Transforming Ideas into <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-indigo-300">Secure Digital Powerhouse</span>
+                    </h1>
+                    <p class="text-lg text-slate-200 max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+                        SecureGrid Digital provides end-to-end web design, performance marketing, Meta ads, SMO, and robust cyber-grid infrastructure for scaling modern brands safely.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#contact" class="w-full sm:w-auto px-8 py-4 bg-white text-brand-800 rounded-xl font-bold text-center shadow-lg hover:bg-slate-100 transition-all transform hover:-translate-y-0.5">
+                            Get Started Now
+                        </a>
+                        <a href="#services" class="w-full sm:w-auto px-8 py-4 bg-brand-800/60 hover:bg-brand-800 border border-blue-400/30 text-white rounded-xl font-semibold text-center backdrop-blur-md transition-all">
+                            Explore Services <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic Card -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none rounded-2xl overflow-hidden shadow-2xl border border-white/20 glass-card p-6 text-slate-800">
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-4 mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400">SecureGrid Dashboard v2.4</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-brand-50 rounded-xl border border-brand-100 flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs text-slate-500 font-medium">Digital ROI Boost</p>
+                                    <p class="text-2xl font-bold text-brand-700">+340%</p>
+                                </div>
+                                <i class="fa-solid fa-chart-line text-3xl text-brand-600"></i>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs text-slate-500 font-medium">Grid Protection Active</p>
+                                    <p class="text-lg font-bold text-slate-800">100% Encrypted</p>
+                                </div>
+                                <i class="fa-solid fa-shield-check text-3xl text-emerald-500"></i>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 text-center">
+                                <div class="p-3 bg-white rounded-lg border border-slate-100 shadow-sm">
+                                    <p class="text-xs text-slate-400">Meta Ads Reach</p>
+                                    <p class="font-bold text-slate-700">1.2M+</p>
+                                </div>
+                                <div class="p-3 bg-white rounded-lg border border-slate-100 shadow-sm">
+                                    <p class="text-xs text-slate-400">Conversion Rate</p>
+                                    <p class="font-bold text-slate-700">14.8%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="bg-white border-b border-slate-100 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-brand-700">350+</p>
+                    <p class="text-sm font-medium text-slate-500 mt-1">Projects Delivered</p>
+                </div>
+                <div>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-brand-700">99.8%</p>
+                    <p class="text-sm font-medium text-slate-500 mt-1">Client Satisfaction</p>
+                </div>
+                <div>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-brand-700">10M+</p>
+                    <p class="text-sm font-medium text-slate-500 mt-1">Ad Impressions</p>
+                </div>
+                <div>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-brand-700">24/7</p>
+                    <p class="text-sm font-medium text-slate-500 mt-1">Grid Protection</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="relative">
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop" alt="Digital Team at Work" class="w-full h-auto object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 w-2/3 rounded-2xl overflow-hidden shadow-2xl border-4 border-white hidden sm:block">
+                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=600&auto=format&fit=crop" alt="Digital Strategy" class="w-full h-auto">
+                    </div>
+                    <div class="absolute -top-4 -left-4 w-24 h-24 bg-brand-100 rounded-full z-0 blur-xl opacity-70"></div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="inline-block px-3.5 py-1 rounded-full text-xs font-bold bg-brand-100 text-brand-700 uppercase tracking-wider">
+                        About SecureGrid Digital
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+                        We Accelerate Growth with Security at the Core
+                    </h2>
+                    <p class="text-slate-600 leading-relaxed">
+                        SecureGrid Digital was founded on a simple yet crucial philosophy: high-performing digital marketing and web assets must be resilient, beautiful, and measurable. We bridge the gap between creative excellence and technological security.
+                    </p>
+                    
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center text-brand-700 flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-bullseye text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Targeted Growth Strategies</h4>
+                                <p class="text-sm text-slate-500">Tailored digital campaigns that reach your exact high-intent audience with precision.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center text-brand-700 flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-lock text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Secure Web Ecosystems</h4>
+                                <p class="text-sm text-slate-500">Every website and portal we design is protected with modern threat mitigation standards.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <a href="#contact" class="inline-flex items-center px-6 py-3 bg-brand-700 hover:bg-brand-800 text-white font-semibold rounded-xl transition-all shadow-md">
+                            Partner With Us <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold bg-brand-100 text-brand-700 uppercase tracking-wider">
+                    Our Expertise
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    Comprehensive Digital Solutions
+                </h2>
+                <p class="text-slate-600">
+                    From cutting-edge website design to revenue-driving Meta Ad campaigns and robust social media optimization.
+                </p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Service 1: Website Designing -->
+                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 hover:shadow-xl transition-all duration-300 group flex flex-col">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=800&auto=format&fit=crop" alt="Website Designing" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                        <span class="absolute bottom-3 left-4 bg-brand-700 text-white text-xs font-bold px-3 py-1 rounded-md">Web Design</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-700 transition-colors">Website Designing</h3>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                Bespoke, responsive, lightning-fast UI/UX web design focused on high conversion and seamless mobile experience.
+                            </p>
+                            <ul class="mt-4 space-y-2 text-xs font-medium text-slate-500">
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> Custom Responsive UI/UX</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> E-Commerce & CMS Platforms</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> Speed & SEO Optimization</li>
+                            </ul>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200">
+                            <a href="#contact" class="text-sm font-semibold text-brand-700 hover:text-brand-800 flex items-center justify-between">
+                                Request Web Consultation <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2: Digital Marketing -->
+                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 hover:shadow-xl transition-all duration-300 group flex flex-col">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" alt="Digital Marketing" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                        <span class="absolute bottom-3 left-4 bg-brand-700 text-white text-xs font-bold px-3 py-1 rounded-md">Growth</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-700 transition-colors">Digital Marketing</h3>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                Multi-channel digital marketing campaigns that drive organic search traffic, acquire qualified leads, and grow revenue.
+                            </p>
+                            <ul class="mt-4 space-y-2 text-xs font-medium text-slate-500">
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> Search Engine Optimization (SEO)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> Pay-Per-Click (PPC) Management</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> Content & Email Marketing</li>
+                            </ul>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200">
+                            <a href="#contact" class="text-sm font-semibold text-brand-700 hover:text-brand-800 flex items-center justify-between">
+                                Plan Strategy <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3: Meta Ads -->
+                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 hover:shadow-xl transition-all duration-300 group flex flex-col">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop" alt="Meta Ads Services" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                        <span class="absolute bottom-3 left-4 bg-brand-700 text-white text-xs font-bold px-3 py-1 rounded-md">Paid Media</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-700 transition-colors">Meta Ads (FB & IG)</h3>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                Hyper-targeted Facebook and Instagram advertising campaigns built for maximum ROAS and retargeting conversion.
+                            </p>
+                            <ul class="mt-4 space-y-2 text-xs font-medium text-slate-500">
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> Custom Audience Funnels</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> High-Converting Ad Creatives</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> Pixel & API Event Tracking</li>
+                            </ul>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200">
+                            <a href="#contact" class="text-sm font-semibold text-brand-700 hover:text-brand-800 flex items-center justify-between">
+                                Launch Meta Campaigns <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 4: SMO Services -->
+                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 hover:shadow-xl transition-all duration-300 group flex flex-col">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=800&auto=format&fit=crop" alt="SMO Services" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                        <span class="absolute bottom-3 left-4 bg-brand-700 text-white text-xs font-bold px-3 py-1 rounded-md">Social Media</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-700 transition-colors">SMO Services</h3>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                Social Media Optimization to strengthen your brand identity, engage loyal communities, and maintain active brand visibility.
+                            </p>
+                            <ul class="mt-4 space-y-2 text-xs font-medium text-slate-500">
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> Social Profile Optimization</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> Content Calendar & Reels</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-600 mr-2"></i> Community Engagement</li>
+                            </ul>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200">
+                            <a href="#contact" class="text-sm font-semibold text-brand-700 hover:text-brand-800 flex items-center justify-between">
+                                Boost Brand Presence <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 5: Cybersecurity & Grid Protection -->
+                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 hover:shadow-xl transition-all duration-300 group flex flex-col md:col-span-2 lg:col-span-2">
+                    <div class="grid md:grid-cols-2 h-full">
+                        <div class="relative h-48 md:h-full overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=800&auto=format&fit=crop" alt="Cyber Security" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                            <span class="absolute bottom-3 left-4 bg-brand-700 text-white text-xs font-bold px-3 py-1 rounded-md">Infrastructure</span>
+                        </div>
+                        <div class="p-6 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-700 transition-colors">Grid Protection & Cyber Security</h3>
+                                <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                    Comprehensive digital infrastructure security, active vulnerability audits, DDoS mitigation, and enterprise SSL management.
+                                </p>
+                                <ul class="mt-4 space-y-2 text-xs font-medium text-slate-500">
+                                    <li class="flex items-center"><i class="fa-solid fa-shield text-brand-600 mr-2"></i> Vulnerability Scanning & Fixes</li>
+                                    <li class="flex items-center"><i class="fa-solid fa-shield text-brand-600 mr-2"></i> Secure Cloud Hosting & Backups</li>
+                                    <li class="flex items-center"><i class="fa-solid fa-shield text-brand-600 mr-2"></i> SSL & Compliance Standards</li>
+                                </ul>
+                            </div>
+                            <div class="mt-6 pt-4 border-t border-slate-200">
+                                <a href="#contact" class="text-sm font-semibold text-brand-700 hover:text-brand-800 flex items-center justify-between">
+                                    Secure Your Website <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive CTA / Banner -->
+    <section class="bg-gradient-to-r from-brand-900 via-brand-800 to-brand-700 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <h2 class="text-3xl sm:text-4xl font-extrabold">Ready to Secure & Scale Your Brand?</h2>
+            <p class="text-blue-100 max-w-2xl mx-auto text-base">
+                Join 300+ companies using SecureGrid Digital to drive revenue and protect their digital footprint.
+            </p>
+            <div>
+                <a href="#contact" class="inline-block px-8 py-3.5 bg-white text-brand-800 hover:bg-blue-50 font-bold rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">
+                    Schedule Free Consultation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12">
+                
+                <!-- Contact Info -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold bg-brand-100 text-brand-700 uppercase tracking-wider">
+                        Contact Us
+                    </span>
+                    <h2 class="text-3xl font-extrabold text-slate-900">Let's Build Something Exceptional</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Have a project in mind or need assistance with web design, Meta ads, or security? Reach out and our team will respond within 24 hours.
+                    </p>
+
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-brand-700">
+                                <i class="fa-solid fa-envelope text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-medium">Email Us</p>
+                                <p class="text-sm font-bold text-slate-800">support@securegriddigital.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-brand-700">
+                                <i class="fa-solid fa-phone text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-medium">Call Us</p>
+                                <p class="text-sm font-bold text-slate-800">+1 (800) 456-7890</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-brand-700">
+                                <i class="fa-solid fa-location-dot text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-medium">Office Location</p>
+                                <p class="text-sm font-bold text-slate-800">100 Digital Tech Avenue, Suite 400</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="lg:col-span-7">
+                    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg">
+                        <h3 class="text-xl font-bold text-slate-900 mb-6">Send Us a Message</h3>
+                        <form id="contactForm" class="space-y-4">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Your Name</label>
+                                    <input type="text" required placeholder="John Doe" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-700/50 focus:border-brand-700 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Email Address</label>
+                                    <input type="email" required placeholder="john@example.com" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-700/50 focus:border-brand-700 text-sm">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Select Service</label>
+                                <select class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-700/50 focus:border-brand-700 text-sm text-slate-700">
+                                    <option>Website Designing</option>
+                                    <option>Digital Marketing</option>
+                                    <option>Meta Ads (Facebook / Instagram)</option>
+                                    <option>SMO Services</option>
+                                    <option>Grid Security & Hosting</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Project Details</label>
+                                <textarea rows="4" required placeholder="Tell us about your project or goals..." class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-700/50 focus:border-brand-700 text-sm"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-brand-700 hover:bg-brand-800 text-white font-bold py-3.5 rounded-lg transition-all shadow-md">
+                                Submit Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                
+                <div class="space-y-4">
+                    <a href="#home" class="flex items-center space-x-2 text-white">
+                        <div class="w-8 h-8 bg-brand-700 rounded-lg flex items-center justify-center text-white">
+                            <i class="fa-solid fa-shield-halved text-lg"></i>
+                        </div>
+                        <span class="text-lg font-extrabold tracking-tight">SecureGrid</span>
+                    </a>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Empowering enterprises with innovative web design, high-converting Meta advertising, SMO, and enterprise-grade digital security.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold text-sm mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold text-sm mb-4">Legal Policies</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="javascript:void(0)" onclick="openModal('privacyModal')" class="hover:text-white transition-colors">Privacy & Policy</a></li>
+                        <li><a href="javascript:void(0)" onclick="openModal('disclaimerModal')" class="hover:text-white transition-colors">Disclaimer</a></li>
+                        <li><a href="javascript:void(0)" onclick="openModal('termsModal')" class="hover:text-white transition-colors">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold text-sm mb-4">Connect With Us</h4>
+                    <div class="flex space-x-3 mb-4">
+                        <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-brand-700 text-white flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-brand-700 text-white flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-brand-700 text-white flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-brand-700 text-white flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+                <p>&copy; 2026 SecureGrid Digital. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 sm:mt-0">
+                    <a href="javascript:void(0)" onclick="openModal('privacyModal')" class="hover:text-slate-400">Privacy</a>
+                    <span>&bull;</span>
+                    <a href="javascript:void(0)" onclick="openModal('disclaimerModal')" class="hover:text-slate-400">Disclaimer</a>
+                    <span>&bull;</span>
+                    <a href="javascript:void(0)" onclick="openModal('termsModal')" class="hover:text-slate-400">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS FOR LEGAL PAGES -->
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeModal('privacyModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Privacy & Policy</h3>
+            <div class="text-sm text-slate-600 space-y-3 leading-relaxed">
+                <p><strong>Effective Date:</strong> January 1, 2026</p>
+                <p>At SecureGrid Digital, protecting your personal and business data is paramount. This Privacy Policy details how we handle information collected on our website.</p>
+                <h4 class="font-bold text-slate-800 pt-2">1. Information We Collect</h4>
+                <p>We collect contact information (name, email, phone) provided via inquiry forms and analytical usage data through standard cookies.</p>
+                <h4 class="font-bold text-slate-800 pt-2">2. How We Use Information</h4>
+                <p>Your details are used strictly to deliver agency services, process requests, improve Meta ad campaigns, and communicate updates.</p>
+                <h4 class="font-bold text-slate-800 pt-2">3. Data Protection & Security</h4>
+                <p>We implement grid protection algorithms and enterprise SSL encryption to protect client communication and project repositories.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+                <button onclick="closeModal('privacyModal')" class="px-5 py-2 bg-brand-700 text-white rounded-lg font-semibold text-sm">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disclaimer Modal -->
+    <div id="disclaimerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeModal('disclaimerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Disclaimer</h3>
+            <div class="text-sm text-slate-600 space-y-3 leading-relaxed">
+                <p>The information provided by SecureGrid Digital on this website is for general informational and marketing purposes only.</p>
+                <h4 class="font-bold text-slate-800 pt-2">1. Performance Guarantees</h4>
+                <p>While we optimize Meta Ads, Digital Marketing, and SMO campaigns for highest ROI, specific revenue metrics depend on external market dynamics, product demand, and platform algorithm updates.</p>
+                <h4 class="font-bold text-slate-800 pt-2">2. External Links</h4>
+                <p>Our website may contain links to third-party tools or platforms. We do not guarantee the accuracy or security of external websites.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+                <button onclick="closeModal('disclaimerModal')" class="px-5 py-2 bg-brand-700 text-white rounded-lg font-semibold text-sm">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeModal('termsModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Terms & Conditions</h3>
+            <div class="text-sm text-slate-600 space-y-3 leading-relaxed">
+                <p>By accessing or using SecureGrid Digital services, you agree to be bound by these Terms and Conditions.</p>
+                <h4 class="font-bold text-slate-800 pt-2">1. Service Scope</h4>
+                <p>SecureGrid Digital delivers Web Design, Digital Marketing, Meta Ads, and SMO services outlined in individual client agreements.</p>
+                <h4 class="font-bold text-slate-800 pt-2">2. Intellectual Property</h4>
+                <p>All client web design code, graphics, and ad assets produced belong to the client upon full payment completion.</p>
+                <h4 class="font-bold text-slate-800 pt-2">3. Governing Law</h4>
+                <p>These terms are governed in accordance with applicable commercial and digital trade laws.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+                <button onclick="closeModal('termsModal')" class="px-5 py-2 bg-brand-700 text-white rounded-lg font-semibold text-sm">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Interactions -->
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.add('hidden');
+        }
+
+        // Modal Controls
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on click outside content
+        window.onclick = function(event) {
+            ['privacyModal', 'disclaimerModal', 'termsModal'].forEach(id => {
+                const modal = document.getElementById(id);
+                if (event.target === modal) {
+                    closeModal(id);
+                }
+            });
+        }
+
+        // Contact Form Submission Simulation
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Toast Animation
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            this.reset();
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
