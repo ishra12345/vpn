@@ -55,6 +55,242 @@ detectCurrency();
 
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Products</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.products-section {
+    padding: 60px 5%;
+    background: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-heading h2 {
+    font-size: 36px;
+    color: #222;
+    margin-bottom: 12px;
+}
+
+.section-heading p {
+    color: #777;
+    font-size: 16px;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.product-image {
+    height: 230px;
+    background: #fff;
+    padding: 15px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.product-info {
+    padding: 20px;
+}
+
+.product-info h3 {
+    font-size: 19px;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.product-info p {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.price {
+    font-size: 21px;
+    font-weight: bold;
+    color: #168b50;
+    margin-bottom: 15px;
+}
+
+.product-btn {
+    display: inline-block;
+    padding: 11px 25px;
+    background: #168b50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.product-btn:hover {
+    background: #106b3d;
+}
+
+/* Tablet */
+@media(max-width: 992px) {
+    .product-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media(max-width: 576px) {
+    .products-section {
+        padding: 40px 15px;
+    }
+
+    .section-heading h2 {
+        font-size: 28px;
+    }
+
+    .product-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .product-image {
+        height: 150px;
+        padding: 10px;
+    }
+
+    .product-info {
+        padding: 12px 8px;
+    }
+
+    .product-info h3 {
+        font-size: 15px;
+    }
+
+    .product-info p {
+        font-size: 12px;
+    }
+
+    .price {
+        font-size: 17px;
+    }
+
+    .product-btn {
+        padding: 9px 12px;
+        font-size: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<section class="products-section">
+
+    <div class="section-heading">
+        <h2>Our Products</h2>
+        <p>Explore our latest collection of quality products.</p>
+    </div>
+
+    <div class="product-container">
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://placehold.co/400x300?text=Product+1" alt="Product 1">
+            </div>
+            <div class="product-info">
+                <h3>Product Name 1</h3>
+                <p>High quality product for your everyday needs.</p>
+                <div class="price">₹499</div>
+                <a href="#" class="product-btn">Buy Now</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://placehold.co/400x300?text=Product+2" alt="Product 2">
+            </div>
+            <div class="product-info">
+                <h3>Product Name 2</h3>
+                <p>Designed to provide comfort and convenience.</p>
+                <div class="price">₹599</div>
+                <a href="#" class="product-btn">Buy Now</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://placehold.co/400x300?text=Product+3" alt="Product 3">
+            </div>
+            <div class="product-info">
+                <h3>Product Name 3</h3>
+                <p>Reliable quality with a modern design.</p>
+                <div class="price">₹799</div>
+                <a href="#" class="product-btn">Buy Now</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://placehold.co/400x300?text=Product+4" alt="Product 4">
+            </div>
+            <div class="product-info">
+                <h3>Product Name 4</h3>
+                <p>A useful addition to your daily lifestyle.</p>
+                <div class="price">₹999</div>
+                <a href="#" class="product-btn">Buy Now</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
